@@ -13,9 +13,18 @@ import org.jivesoftware.smack.roster.RosterListener;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.jivesoftware.smackx.iqregister.AccountManager;
+import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smackx.muc.MultiUserChatManager;
+import org.jivesoftware.smackx.muc.RoomInfo;
+import org.jivesoftware.smackx.xdata.Form;
+import org.jivesoftware.smackx.xdata.FormField;
+import org.jivesoftware.smackx.xdata.packet.DataForm;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class HelloWorld {
     public static void getRoster(AbstractXMPPConnection connection) {
@@ -31,6 +40,7 @@ public class HelloWorld {
             public void entriesAdded(Collection<String> addresses) {
                 System.out.println("add roster: " + addresses);
             }
+
             public void entriesDeleted(Collection<String> addresses) {
                 System.out.println("delete roster: " + addresses);
             }
@@ -88,6 +98,72 @@ public class HelloWorld {
         AccountManager accountManager = AccountManager.getInstance(connection);
         try {
             accountManager.createAccount(name, pass);
+        } catch (SmackException.NoResponseException e) {
+            e.printStackTrace();
+        } catch (XMPPException.XMPPErrorException e) {
+            e.printStackTrace();
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createRoom(AbstractXMPPConnection connection) {
+        // Get the MultiUserChatManager
+        MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
+
+        // Get a MultiUserChat using MultiUserChatManager
+        MultiUserChat muc = manager.getMultiUserChat("test_room@conference.ejabberddemo.com");
+
+        // Create the room
+        try {
+            muc.create("test_room");
+            muc.join("test5", "123456");
+        } catch (XMPPException.XMPPErrorException e) {
+            e.printStackTrace();
+        } catch (SmackException e) {
+            e.printStackTrace();
+        }
+
+        // Send an empty room configuration form which indicates that we want an instant room
+        try {
+            muc.sendConfigurationForm(new Form(DataForm.Type.submit));
+        } catch (SmackException.NoResponseException e) {
+            e.printStackTrace();
+        } catch (XMPPException.XMPPErrorException e) {
+            e.printStackTrace();
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void roomInfo(AbstractXMPPConnection connection) {
+        // Get the MultiUserChatManager
+        MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
+
+        RoomInfo info = null;
+        try {
+            info = manager.getRoomInfo("test_room@conference.ejabberddemo.com");
+        } catch (SmackException.NoResponseException e) {
+            e.printStackTrace();
+        } catch (XMPPException.XMPPErrorException e) {
+            e.printStackTrace();
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(info);
+        System.out.println("Number of occupants:" + info.getOccupantsCount());
+        System.out.println("Room Subject:" + info.getSubject());
+    }
+
+    public static void joinedRooms(AbstractXMPPConnection connection) {
+        MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
+        // Get the rooms where user3@host.org has joined
+        try {
+            List<String> joinedRooms = manager.getJoinedRooms("test5@ejabberddemo.com/Smack");
+            System.out.print(joinedRooms);
+            for (int i = 0; i < joinedRooms.size(); i++) {
+                System.out.print(joinedRooms.get(i));
+            }
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
@@ -162,12 +238,18 @@ public class HelloWorld {
 //        addRoster(connection, "test5@ejabberddemo.com", "iamtest5", null);
 //        sendSubscribed(connection, "test5@ejabberddemo.com");
 
+
+        // room
+        createRoom(connection);
+
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         getRoster(connection);
+        roomInfo(connection);
+        joinedRooms(connection);
 
         while(true);  // 死循环，维持该连接不中断
 
