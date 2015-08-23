@@ -18,3 +18,4 @@ java -jar build/libs/xmpp4j-1.0.jar
 
 * [smack-4-1-processmessage-method-does-not-called](http://stackoverflow.com/questions/28295783/smack-4-1-processmessage-method-does-not-called)
 * [Smack multi user chat list of online users](http://stackoverflow.com/questions/15973194/smack-multi-user-chat-list-of-online-users)
+* [Unable to create persistent chat room smack 4.1.1](https://community.igniterealtime.org/thread/55940)
