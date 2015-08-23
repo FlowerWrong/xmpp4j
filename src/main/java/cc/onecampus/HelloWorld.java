@@ -110,42 +110,67 @@ public class HelloWorld {
     }
 
     public static void createRoom(AbstractXMPPConnection connection) {
-        // Get the MultiUserChatManager
-        MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
-
-        // Get a MultiUserChat using MultiUserChatManager
-        MultiUserChat muc = manager.getMultiUserChat("test_room@conference.ejabberddemo.com");
-
-        // Create the room
         try {
-            muc.create("test_room");
-        } catch (XMPPException.XMPPErrorException e) {
-            e.printStackTrace();
-        } catch (SmackException e) {
-            e.printStackTrace();
-        }
+            // Get the MultiUserChatManager
+            MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
 
-        // Send an empty room configuration form which indicates that we want an instant room
-        try {
-            muc.sendConfigurationForm(new Form(DataForm.Type.submit));
+            // Get a MultiUserChat using MultiUserChatManager
+            MultiUserChat muc = manager.getMultiUserChat("demoroom@conference.ejabberddemo.com");
+            muc.create("demoroom");
+
+            // User1 (which is the room owner) configures the room as a moderated room
+            Form form = muc.getConfigurationForm();
+            Form answerForm = form.createAnswerForm();
+            //向提交的表单添加默认答复,获取房间的默认设置菜单
+            for(FormField field : form.getFields() ){
+                if(!FormField.Type.hidden.name().equals(field.getType()) && field.getVariable() != null) {
+                    answerForm.setDefaultAnswer(field.getVariable());
+                }
+            }
+
+            //muc#
+            //房间名称
+            answerForm.setAnswer(FormField.FORM_TYPE, "http://jabber.org/protocol/muc#roomconfig");
+            //设置房间名称
+            answerForm.setAnswer("muc#roomconfig_roomname", "demoroom");
+            //设置房间描述
+            answerForm.setAnswer("muc#roomconfig_roomdesc", "google demo room");
+            //是否允许修改主题
+            answerForm.setAnswer("muc#roomconfig_changesubject", true);
+
+            //设置房间最大用户数
+            List<String> maxusers = new ArrayList<String>();
+            maxusers.add("100");
+            answerForm.setAnswer("muc#roomconfig_maxusers", maxusers);
+
+//            List<String> cast_values = new ArrayList<String>();
+//            cast_values.add("moderator");
+//            cast_values.add("participant");
+//            cast_values.add("visitor");
+//            answerForm.setAnswer("muc#roomconfig_presencebroadcast", cast_values);
+            //设置为公共房间
+            answerForm.setAnswer("muc#roomconfig_publicroom", true);
+            //设置为永久房间
+            answerForm.setAnswer("muc#roomconfig_persistentroom", true);
+            //允许修改昵称
+            // answerForm.setAnswer("x-muc#roomconfig_canchangenick", true);
+            //允许用户登录注册房间
+            // answerForm.setAnswer("x-muc#roomconfig_registration", true);
+
+            // Sets the new owner of the room
+            List owners = new ArrayList();
+            owners.add("yang@ejabberddemo.com");
+            answerForm.setAnswer("muc#roomconfig_roomowners", owners);
+
+            muc.sendConfigurationForm(answerForm);
+            muc.join("demoroom");
+        } catch (XMPPException e) {
+            e.printStackTrace();
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
-        } catch (XMPPException.XMPPErrorException e) {
-            e.printStackTrace();
         } catch (SmackException.NotConnectedException e) {
-            e.printStackTrace();
-        }
-        try {
-            // 最重要一句:直到用户调用join方法的时候聊天室才会被创建
-            muc.join("yang", "123456");
-        } catch (XMPPException.XMPPErrorException e) {
             e.printStackTrace();
         } catch (SmackException e) {
-            e.printStackTrace();
-        }
-        try {
-            muc.invite("test4@ejabberddemo.com", "大家来谈谈人生");
-        } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }
         // http://blog.csdn.net/liuhongwei123888/article/details/6618408
@@ -157,7 +182,7 @@ public class HelloWorld {
 
         RoomInfo info = null;
         try {
-            info = manager.getRoomInfo("test_room@conference.ejabberddemo.com");
+            info = manager.getRoomInfo("demoroom@conference.ejabberddemo.com");
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
@@ -174,7 +199,7 @@ public class HelloWorld {
         MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
         // Get the rooms where user3@host.org has joined
         try {
-            List<String> joinedRooms = manager.getJoinedRooms("test5@ejabberddemo.com/Smack");
+            List<String> joinedRooms = manager.getJoinedRooms("test4@ejabberddemo.com");
             System.out.print(joinedRooms);
             for (int i = 0; i < joinedRooms.size(); i++) {
                 System.out.print(joinedRooms.get(i));
@@ -193,6 +218,7 @@ public class HelloWorld {
 
         // debug: http://www.igniterealtime.org/builds/smack/docs/latest/documentation/debugging.html
         SmackConfiguration.DEBUG = true;
+        SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
 
         // Create the configuration for this new connection
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
@@ -255,7 +281,7 @@ public class HelloWorld {
 
 
         // room
-        createRoom(connection);
+        // createRoom(connection);
 
         try {
             Thread.sleep(3000);
@@ -264,7 +290,7 @@ public class HelloWorld {
         }
         getRoster(connection);
         roomInfo(connection);
-        joinedRooms(connection);
+        // joinedRooms(connection);
 
         while(true);  // 死循环，维持该连接不中断
 
