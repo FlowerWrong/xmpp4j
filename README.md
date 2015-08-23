@@ -4,8 +4,8 @@
 
 * [gradle 2.6](http://gradle.org/)
 * [smack 4.1.3 xmpp client](http://www.igniterealtime.org/projects/smack/index.jsp)
-* [spark gui test](http://www.igniterealtime.org/projects/spark/index.jsp)
-* [ejabberd xmpp server](https://www.process-one.net/en/ejabberd/)
+* [spark for gui test](http://www.igniterealtime.org/projects/spark/index.jsp)
+* [ejabberd 15.07 xmpp server](https://www.process-one.net/en/ejabberd/)
 
 ### Usage
 

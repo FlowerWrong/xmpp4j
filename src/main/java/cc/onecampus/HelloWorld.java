@@ -6,26 +6,20 @@ import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.chat.ChatManagerListener;
 import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.packet.Stanza;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smack.roster.RosterListener;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.jivesoftware.smackx.iqregister.AccountManager;
-import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.jivesoftware.smackx.muc.MultiUserChatManager;
-import org.jivesoftware.smackx.muc.RoomInfo;
+import org.jivesoftware.smackx.muc.*;
 import org.jivesoftware.smackx.xdata.Form;
 import org.jivesoftware.smackx.xdata.FormField;
-import org.jivesoftware.smackx.xdata.packet.DataForm;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class HelloWorld {
@@ -213,6 +207,35 @@ public class HelloWorld {
         }
     }
 
+    public static void invite(AbstractXMPPConnection connection, String jid) {
+        MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
+
+        // Get a MultiUserChat using MultiUserChatManager
+        MultiUserChat muc = manager.getMultiUserChat("demoroom@conference.ejabberddemo.com");
+        muc.addInvitationRejectionListener(new InvitationRejectionListener() {
+            public void invitationDeclined(String invitee, String reason) {
+                System.out.print("invitationDeclined");
+                System.out.print(invitee);
+                System.out.print(reason);
+            }
+        });
+
+        try {
+            muc.invite(jid, "Meet me in this excellent room");
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+
+        MultiUserChatManager.getInstanceFor(connection).addInvitationListener(new InvitationListener() {
+            @Override
+            public void invitationReceived(XMPPConnection xmppConnection, MultiUserChat multiUserChat, String s, String s1, String s2, Message message) {
+                // MultiUserChat.decline(xmppConnection, multiUserChat, inviter, "I'm busy right now");
+                System.out.print("invitationReceived");
+            }
+        });
+
+    }
+
     public static void main(String[] args) {
         System.out.println("Hello World!");
 
@@ -282,6 +305,8 @@ public class HelloWorld {
 
         // room
         // createRoom(connection);
+
+        invite(connection, "yang@ejabberddemo.com");
 
         try {
             Thread.sleep(3000);
