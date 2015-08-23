@@ -6,7 +6,9 @@ import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.chat.ChatManagerListener;
 import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.packet.Stanza;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smack.roster.RosterListener;
@@ -117,7 +119,6 @@ public class HelloWorld {
         // Create the room
         try {
             muc.create("test_room");
-            muc.join("test5", "123456");
         } catch (XMPPException.XMPPErrorException e) {
             e.printStackTrace();
         } catch (SmackException e) {
@@ -134,6 +135,20 @@ public class HelloWorld {
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }
+        try {
+            // 最重要一句:直到用户调用join方法的时候聊天室才会被创建
+            muc.join("yang", "123456");
+        } catch (XMPPException.XMPPErrorException e) {
+            e.printStackTrace();
+        } catch (SmackException e) {
+            e.printStackTrace();
+        }
+        try {
+            muc.invite("test4@ejabberddemo.com", "大家来谈谈人生");
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+        // http://blog.csdn.net/liuhongwei123888/article/details/6618408
     }
 
     public static void roomInfo(AbstractXMPPConnection connection) {

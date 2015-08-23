@@ -673,6 +673,8 @@ modules:
   mod_vcard: {}
   mod_version: {}
 
+  mod_muc_admin: {}
+
 ##
 ## Enable modules with custom options in a specific virtual host
 ##
