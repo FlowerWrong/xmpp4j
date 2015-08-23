@@ -46,6 +46,44 @@ public class HelloWorld {
         });
     }
 
+    public static void sendSubscribe(AbstractXMPPConnection connection, String jid) {
+        Presence subscribe = new Presence(Presence.Type.subscribe);
+        subscribe.setTo(jid);
+        try {
+            connection.sendPacket(subscribe);
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendSubscribed(AbstractXMPPConnection connection, String jid) {
+        Presence subscribed = new Presence(Presence.Type.subscribed);
+        subscribed.setTo(jid);
+        try {
+            connection.sendPacket(subscribed);
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addRoster(AbstractXMPPConnection connection, String jid, String name, String[] groups) {
+        Roster roster = Roster.getInstanceFor(connection);
+
+        Presence subscribed = new Presence(Presence.Type.subscribed);
+
+        try {
+            roster.createEntry(jid, name, groups);
+        } catch (SmackException.NotLoggedInException e) {
+            e.printStackTrace();
+        } catch (SmackException.NoResponseException e) {
+            e.printStackTrace();
+        } catch (XMPPException.XMPPErrorException e) {
+            e.printStackTrace();
+        } catch (SmackException.NotConnectedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void register(AbstractXMPPConnection connection, String name, String pass) {
         AccountManager accountManager = AccountManager.getInstance(connection);
         try {
@@ -68,9 +106,9 @@ public class HelloWorld {
         // Create the configuration for this new connection
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-        configBuilder.setUsernameAndPassword("yang", "123456");
+        configBuilder.setUsernameAndPassword("test5", "123456");
         // configBuilder.setResource("");
-        configBuilder.setServiceName("localhost");
+        configBuilder.setServiceName("ejabberddemo.com");
         configBuilder.setDebuggerEnabled(true).build();
 
         AbstractXMPPConnection connection = new XMPPTCPConnection(configBuilder.build());
@@ -107,18 +145,29 @@ public class HelloWorld {
         });
 
         // send msg
-//        Chat chat = ChatManager.getInstanceFor(connection).createChat("test1@localhost");
+//        Chat chat = ChatManager.getInstanceFor(connection).createChat("test4@ejabberddemo.com");
 //        try {
 //            chat.sendMessage("Howdy!");
 //        } catch (SmackException.NotConnectedException e) {
 //            e.printStackTrace();
 //        }
 
-        // rosters
-        getRoster(connection);
-
         // register
-        register(connection, "test4", "123456");
+        //register(connection, "test5", "123456");
+
+        // Add roster
+        //sendSubscribe(connection, "test4@ejabberddemo.com");
+        // sendSubscribed(connection, "test5@ejabberddemo.com");
+        //sendSubscribe(connection, "yang@ejabberddemo.com");
+//        addRoster(connection, "test5@ejabberddemo.com", "iamtest5", null);
+//        sendSubscribed(connection, "test5@ejabberddemo.com");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        getRoster(connection);
 
         while(true);  // 死循环，维持该连接不中断
 
