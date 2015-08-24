@@ -506,8 +506,8 @@ access:
   register:
     all: allow
   ## Only allow to register from localhost
-  trusted_network:
-    all: allow
+  #  trusted_network:
+  #    all: allow
     # loopback: allow
   ## Do not establish S2S connections with bad servers
   ## s2s:
@@ -656,7 +656,7 @@ modules:
     ## Only clients in the server machine can register accounts
     ##
     ## ip_access: trusted_network
-    ip_access: trusted_network
+    ip_access: all
 
     ##
     ## Local c2s or remote s2s users cannot register accounts
