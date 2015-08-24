@@ -675,8 +675,7 @@ modules:
 
   mod_muc_admin: {}
 
-  mod_mam:
-    db_type: odbc
+  mod_mam: {}
 
 ##
 ## Enable modules with custom options in a specific virtual host

@@ -7,6 +7,7 @@
 * [spark for gui test](http://www.igniterealtime.org/projects/spark/index.jsp)
 * [ejabberd 15.07 xmpp server](https://www.process-one.net/en/ejabberd/)
 * [xmpp rfc](http://wiki.jabbercn.org)
+* [Conversations android xmpp client](https://github.com/siacs/Conversations)
 
 ### Usage
 
@@ -52,3 +53,4 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [implement-group-chat-using-ejabberd](http://stackoverflow.com/questions/30393938/implement-group-chat-using-ejabberd)
 * [In group chat occupants is removed from group when he is offline](https://community.igniterealtime.org/thread/53374)
 * [ejabberd 15.06: Message archive, configuration checker and new packages XEP-313](https://blog.process-one.net/ejabberd-15-06/)
+* [ejabberd-manual-xmpp-rules-for-leaving-rooms](http://stackoverflow.com/questions/10758295/ejabberd-manual-xmpp-rules-for-leaving-rooms)
