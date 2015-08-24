@@ -1,11 +1,17 @@
 package cc.onecampus;
 
+import org.apache.commons.io.IOUtils;
 import org.jivesoftware.smack.*;
+import org.jivesoftware.smack.provider.ProviderManager;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
-import org.jivesoftware.smackx.vcardtemp.VCardManager;
 import org.jivesoftware.smackx.vcardtemp.packet.VCard;
+import org.jivesoftware.smackx.vcardtemp.provider.VCardProvider;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,29 +42,53 @@ public class Avatar {
             e.printStackTrace();
         }
 
-        // FIXME
-        VCardManager vcm = VCardManager.getInstanceFor(connection);
-        VCard vc = null;
-        try {
-            vc = vcm.loadVCard();
-        } catch (SmackException.NoResponseException e) {
-            e.printStackTrace();
-        } catch (XMPPException.XMPPErrorException e) {
-            e.printStackTrace();
-        } catch (SmackException.NotConnectedException e) {
-            e.printStackTrace();
-        }
-        URL url = null;
-        try {
-            url = new URL("https://ruby-china-files.b0.upaiyun.com/user/large_avatar/1667.jpg");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        System.out.println("avatar: " + url);
-        vc.setAvatar(url);
+        VCard vc = new VCard();
+//        try {
+//            vc.load(connection);
+//        } catch (SmackException.NoResponseException e) {
+//            e.printStackTrace();
+//        } catch (XMPPException.XMPPErrorException e) {
+//            e.printStackTrace();
+//        } catch (SmackException.NotConnectedException e) {
+//            e.printStackTrace();
+//        }
+
+//        URL url = null;
+//        try {
+//            url = new URL("https://ruby-china-files.b0.upaiyun.com/user/large_avatar/1667.jpg");
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("avatar: " + url);
+//
+//        java.io.InputStream stream = null;
+//        try {
+//            stream = url.openStream();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        byte[] avatar = new byte[0];
+//        try {
+//            avatar = IOUtils.toByteArray(stream);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("avatar length " + avatar.length);
+//
+//        vc.setAvatar(avatar, "avatar/jpg");
+//
+//        try {
+//            vc.save(connection);
+//        } catch (SmackException.NoResponseException e) {
+//            e.printStackTrace();
+//        } catch (XMPPException.XMPPErrorException e) {
+//            e.printStackTrace();
+//        } catch (SmackException.NotConnectedException e) {
+//            e.printStackTrace();
+//        }
 
         try {
-            vcm.saveVCard(vc);
+            vc.load(connection);
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
@@ -67,17 +97,14 @@ public class Avatar {
             e.printStackTrace();
         }
 
+        byte[] avatarBytes = vc.getAvatar();
         try {
-            vc = vcm.loadVCard();
-        } catch (SmackException.NoResponseException e) {
-            e.printStackTrace();
-        } catch (XMPPException.XMPPErrorException e) {
-            e.printStackTrace();
-        } catch (SmackException.NotConnectedException e) {
+            BufferedImage img = ImageIO.read(new ByteArrayInputStream(avatarBytes));
+            System.out.println(img);
+            // ImageIO.write(img, "jpg", new File("/home/yy/dev/java/xmpp4j/avatar.jpg"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        byte[] avatar = vc.getAvatar();
-        System.out.println(avatar);
 
         try {
             Thread.sleep(3000);

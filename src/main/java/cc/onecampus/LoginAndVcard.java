@@ -18,7 +18,7 @@ public class LoginAndVcard {
         // Create the configuration for this new connection
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-        configBuilder.setUsernameAndPassword("registeruser", "123456");
+        configBuilder.setUsernameAndPassword("registeruser", "12345678");
         // configBuilder.setResource("");
         configBuilder.setServiceName("ejabberddemo.com");
         configBuilder.setDebuggerEnabled(true).build();
@@ -71,7 +71,9 @@ public class LoginAndVcard {
         // To load VCard:
         try {
             vCard.load(connection); // load own VCard
-            System.out.print(vCard.getFirstName());
+            System.out.println(vCard.getFirstName());
+            System.out.println(vCard.getLastName());
+            System.out.println(vCard.getAvatar());
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
