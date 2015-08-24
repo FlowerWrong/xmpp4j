@@ -48,3 +48,7 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [基于ejabberd简单实现xmpp群聊离线消息](http://my.oschina.net/csq/blog/342212)
 * [聊天服务器：Ejabberd 安装与离线转发模块的实现](http://tianmaying.com/blog/8ab3eda84dfb8f90014e01e20fcb010a)
 * [Persistent XMPP MUC (XEP-45), like WhatsApp groupchats](http://stackoverflow.com/questions/25982426/persistent-xmpp-muc-xep-45-like-whatsapp-groupchats)
+* [delivering-messages-to-offline-users-in-a-multi-user-chat-ejabberd](http://stackoverflow.com/questions/22352864/delivering-messages-to-offline-users-in-a-multi-user-chat-ejabberd)
+* [implement-group-chat-using-ejabberd](http://stackoverflow.com/questions/30393938/implement-group-chat-using-ejabberd)
+* [In group chat occupants is removed from group when he is offline](https://community.igniterealtime.org/thread/53374)
+* [ejabberd 15.06: Message archive, configuration checker and new packages XEP-313](https://blog.process-one.net/ejabberd-15-06/)
