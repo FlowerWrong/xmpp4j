@@ -304,7 +304,7 @@ public class HelloWorld {
 
 
         // room
-        // createRoom(connection);
+        // CreateRoom(connection);
 
         invite(connection, "yang@ejabberddemo.com");
 
