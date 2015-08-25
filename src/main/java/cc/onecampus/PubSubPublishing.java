@@ -48,16 +48,17 @@ public class PubSubPublishing {
             e.printStackTrace();
         }
 
+        String msg = "publish msg test";
+
+        SimplePayload payload = new SimplePayload("message","pubsub:test:message", "<message xmlns='pubsub:test:message'><body>" + msg + "</body></message>");
+        PayloadItem<SimplePayload> item = new PayloadItem<SimplePayload>("5", payload);
+
         try {
-            // leaf.send(new PayloadItem("test" + System.currentTimeMillis(), new SimplePayload("book", "pubsub:test:book", "Two Towers")));
-            leaf.send(new Item("123abc"));
-        } catch (SmackException.NoResponseException e) {
-            e.printStackTrace();
-        } catch (XMPPException.XMPPErrorException e) {
-            e.printStackTrace();
+            leaf.publish(item);
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }
+        System.out.println("-----publish-----------");
 
         while (true);
     }

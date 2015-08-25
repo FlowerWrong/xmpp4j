@@ -3,10 +3,8 @@ package cc.onecampus;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
-import org.jivesoftware.smackx.pubsub.LeafNode;
-import org.jivesoftware.smackx.pubsub.PayloadItem;
-import org.jivesoftware.smackx.pubsub.PubSubManager;
-import org.jivesoftware.smackx.pubsub.SimplePayload;
+import org.jivesoftware.smackx.pubsub.*;
+import org.jivesoftware.smackx.pubsub.listener.ItemEventListener;
 
 import java.io.IOException;
 
@@ -50,9 +48,16 @@ public class PubSubReceiving {
         }
 
         node.addItemDeleteListener(new ItemDeleteCoordinator());
+
+        node.addItemEventListener(new ItemEventListener() {
+            @Override
+            public void handlePublishedItems(ItemPublishEvent items) {
+                System.out.println(items);
+            }
+        });
         try {
-            // FIXME bad-request - modify
-            node.subscribe("registeruser@ejabberddemo.com");
+            // The bare jid portion of this one must match the jid for the connection.
+            node.subscribe("registeruser2@ejabberddemo.com");
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
