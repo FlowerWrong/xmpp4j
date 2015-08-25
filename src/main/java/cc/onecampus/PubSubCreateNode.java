@@ -39,6 +39,7 @@ public class PubSubCreateNode {
         PubSubManager mgr = new PubSubManager(connection);
         LeafNode leaf = null;
         try {
+            // 创建一个node, nodename就是room name 用户加入后就订阅这个node
             leaf = mgr.createNode("testNode");
             System.out.println(leaf);
         } catch (SmackException.NoResponseException e) {
