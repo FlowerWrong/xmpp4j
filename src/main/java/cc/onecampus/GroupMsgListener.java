@@ -80,6 +80,9 @@ public class GroupMsgListener {
         System.out.println("=================joinedrooms==============");
         System.out.println(joinedRooms);
 
+        // 当用户离开用户组又重新加入,离开那段时间的消息是没有办法接受到
+        // FIXME
+        // 考虑另外的表保存群里的用户, 自动发消息给所有离线用户, hack core
         muc.addMessageListener(new MessageListener() {
             @Override
             public void processMessage(Message message) {
