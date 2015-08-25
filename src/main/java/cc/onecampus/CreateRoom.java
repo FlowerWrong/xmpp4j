@@ -3,7 +3,6 @@ package cc.onecampus;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
-import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.jivesoftware.smackx.muc.MultiUserChatManager;
 import org.jivesoftware.smackx.muc.RoomInfo;
@@ -12,8 +11,8 @@ import org.jivesoftware.smackx.xdata.FormField;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by yy on 15-8-24.
@@ -42,11 +41,13 @@ public class CreateRoom {
             e.printStackTrace();
         }
 
+        String roomName = "demoroom5";
+
         // https://github.com/rtreffer/smack/blob/master/test/org/jivesoftware/smackx/muc/MultiUserChatTest.java
         try {
             MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
-            MultiUserChat muc = manager.getMultiUserChat("demoroom5@conference.ejabberddemo.com");
-            muc.create("demoroom5");
+            MultiUserChat muc = manager.getMultiUserChat(roomName + "@conference.ejabberddemo.com");
+            muc.create(roomName);
 
             Form form = muc.getConfigurationForm();
             Form answerForm = form.createAnswerForm();
@@ -59,9 +60,9 @@ public class CreateRoom {
 
             answerForm.setAnswer(FormField.FORM_TYPE, "http://jabber.org/protocol/muc#roomconfig");
             //设置房间名称
-            answerForm.setAnswer("muc#roomconfig_roomname", "demoroom5");
+            answerForm.setAnswer("muc#roomconfig_roomname", roomName);
             //设置房间描述
-            answerForm.setAnswer("muc#roomconfig_roomdesc", "google demoroom5 room");
+            answerForm.setAnswer("muc#roomconfig_roomdesc", roomName);
             //是否允许修改主题
             answerForm.setAnswer("muc#roomconfig_changesubject", true);
 
@@ -74,25 +75,13 @@ public class CreateRoom {
             answerForm.setAnswer("muc#roomconfig_publicroom", true);
             //设置为永久房间
             answerForm.setAnswer("muc#roomconfig_persistentroom", true);
-/*            //允许修改昵称
-            answerForm.setAnswer("x-muc#roomconfig_canchangenick", true);
-            //允许用户登录注册房间
-            answerForm.setAnswer("x-muc#roomconfig_registration", true);*/
-
-
-            // Sets the new owner of the room
-            // FIXME
-//            List owners = new ArrayList();
-//            owners.add("registeruser2@ejabberddemo.com");
-//            answerForm.setAnswer("muc#roomconfig_roomowners", owners);
-
 
             muc.sendConfigurationForm(answerForm);
             muc.join("nickname");
 
             RoomInfo info = null;
             try {
-                info = manager.getRoomInfo("demoroom5@conference.ejabberddemo.com");
+                info = manager.getRoomInfo(roomName + "@conference.ejabberddemo.com");
             } catch (SmackException.NoResponseException e) {
                 e.printStackTrace();
             } catch (XMPPException.XMPPErrorException e) {
@@ -101,29 +90,15 @@ public class CreateRoom {
                 e.printStackTrace();
             }
             System.out.println(info);
-            System.out.println("Number of occupants:" + info.getOccupantsCount());
-            System.out.println("Number of occupants:" + info.getContactJids());
-            System.out.println("Room Subject:" + info.getSubject());
+            System.out.println(info.getRoom());
 
-            List<String> listUser = new ArrayList<String>();
-            Iterator<String> it = (Iterator<String>) muc.getOccupants();
-            while (it.hasNext()) {
-                System.out.println(it.next());
-            }
+            System.out.println("============================Number of occupants:" + info.getOccupantsCount());
+            System.out.println("============================Room Subject:" + info.getName());
 
-            try {
-                List<String> joinedRooms = manager.getJoinedRooms("registeruser@ejabberddemo.com");
-                System.out.print(joinedRooms);
-                for (int i = 0; i < joinedRooms.size(); i++) {
-                    System.out.print(joinedRooms.get(i));
-                }
-            } catch (SmackException.NoResponseException e) {
-                e.printStackTrace();
-            } catch (XMPPException.XMPPErrorException e) {
-                e.printStackTrace();
-            } catch (SmackException.NotConnectedException e) {
-                e.printStackTrace();
-            }
+            // sudo ejabberdctl get_room_occupants demoroom3 conference.ejabberddemo.com
+            Set<String> joinedRooms = manager.getJoinedRooms();
+            System.out.println("=================joinedrooms==============");
+            System.out.println(joinedRooms);
         } catch (XMPPException e) {
             e.printStackTrace();
         } catch (SmackException.NoResponseException e) {
@@ -133,5 +108,7 @@ public class CreateRoom {
         } catch (SmackException e) {
             e.printStackTrace();
         }
+
+        while (true);
     }
 }

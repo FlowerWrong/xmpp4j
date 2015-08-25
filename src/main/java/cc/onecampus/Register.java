@@ -16,6 +16,7 @@ public class Register {
         AccountManager accountManager = AccountManager.getInstance(connection);
         try {
             accountManager.createAccount(name, pass);
+            accountManager.sensitiveOperationOverInsecureConnection(true);
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
@@ -46,6 +47,6 @@ public class Register {
             e.printStackTrace();
         }
 
-        register(connection, "registeruser2", "123456");
+        register(connection, "registeruser", "12345678");
     }
 }

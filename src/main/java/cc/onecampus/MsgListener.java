@@ -12,21 +12,21 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import java.io.IOException;
 
 /**
- * Created by yy on 15-8-24.
+ * Created by yy on 15-8-25.
  */
-public class SendMsg {
+public class MsgListener {
     public static void main(String[] args) {
         SmackConfiguration.DEBUG = true;
         SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
 
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-        configBuilder.setUsernameAndPassword("registeruser", "12345678");
+        configBuilder.setUsernameAndPassword("registeruser2", "123456");
 
         configBuilder.setServiceName("ejabberddemo.com");
         configBuilder.setDebuggerEnabled(true).build();
 
-        AbstractXMPPConnection connection = new XMPPTCPConnection(configBuilder.build());
+        final AbstractXMPPConnection connection = new XMPPTCPConnection(configBuilder.build());
         try {
             connection.connect();
             connection.login();
@@ -47,23 +47,20 @@ public class SendMsg {
                     public void processMessage(Chat chat, Message message) {
                         System.out.println("========================" + message.getFrom() + " : " + message.getBody());
                         if (message.getType() == Message.Type.chat || message.getType() == Message.Type.normal) {
-                            if(message.getBody() != null) {
+                            if (message.getBody() != null) {
                                 System.out.println("========================" + message.getFrom() + " : " + message.getBody());
+                                // reply msg
+                                try {
+                                    chat.sendMessage("hello registeruser!");
+                                } catch (SmackException.NotConnectedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
                 });
             }
         });
-
-        // send msg
-        Chat chat = ChatManager.getInstanceFor(connection).createChat("registeruser2@ejabberddemo.com");
-        try {
-            chat.sendMessage("Howdy!");
-        } catch (SmackException.NotConnectedException e) {
-            e.printStackTrace();
-        }
-
         while (true);
     }
 }

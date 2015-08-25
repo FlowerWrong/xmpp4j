@@ -4,22 +4,25 @@ import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
-import org.jivesoftware.smackx.muc.*;
+import org.jivesoftware.smackx.muc.InvitationRejectionListener;
+import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smackx.muc.MultiUserChatManager;
+import org.jivesoftware.smackx.muc.RoomInfo;
 
 import java.io.IOException;
 import java.util.Set;
 
 /**
- * Created by yy on 15-8-24.
+ * Created by yy on 15-8-25.
  */
-public class InviteToRoom {
+public class GroupMsgListener {
     public static void main(String[] args) {
         SmackConfiguration.DEBUG = true;
         SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
 
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-        configBuilder.setUsernameAndPassword("registeruser", "12345678");
+        configBuilder.setUsernameAndPassword("registeruser2", "123456");
         configBuilder.setServiceName("ejabberddemo.com");
         configBuilder.setDebuggerEnabled(true).build();
 
@@ -39,7 +42,7 @@ public class InviteToRoom {
         MultiUserChat muc = manager.getMultiUserChat("demoroom4@conference.ejabberddemo.com");
 
         try {
-            muc.join("registeruser");
+            muc.join("registeruser2");
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
@@ -77,12 +80,14 @@ public class InviteToRoom {
         System.out.println("=================joinedrooms==============");
         System.out.println(joinedRooms);
 
-        try {
-            // Only occupants are allowed to send messages to the conference
-            muc.invite("registeruser2@ejabberddemo.com", "Go here to make love.");
-        } catch (SmackException.NotConnectedException e) {
-            e.printStackTrace();
-        }
+        muc.addMessageListener(new MessageListener() {
+            @Override
+            public void processMessage(Message message) {
+                System.out.println("=================addMessageListener==============");
+                System.out.println(message);
+                System.out.println(message.getFrom());
+            }
+        });
 
         while (true);
     }

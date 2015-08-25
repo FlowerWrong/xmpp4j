@@ -4,15 +4,18 @@ import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
-import org.jivesoftware.smackx.muc.*;
+import org.jivesoftware.smackx.muc.InvitationRejectionListener;
+import org.jivesoftware.smackx.muc.MultiUserChat;
+import org.jivesoftware.smackx.muc.MultiUserChatManager;
+import org.jivesoftware.smackx.muc.RoomInfo;
 
 import java.io.IOException;
 import java.util.Set;
 
 /**
- * Created by yy on 15-8-24.
+ * Created by yy on 15-8-25.
  */
-public class InviteToRoom {
+public class SendGroupMsg {
     public static void main(String[] args) {
         SmackConfiguration.DEBUG = true;
         SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
@@ -77,9 +80,17 @@ public class InviteToRoom {
         System.out.println("=================joinedrooms==============");
         System.out.println(joinedRooms);
 
+        muc.addMessageListener(new MessageListener() {
+            @Override
+            public void processMessage(Message message) {
+                System.out.println("=================addMessageListener==============");
+                System.out.println(message);
+                System.out.println(message.getFrom());
+            }
+        });
+
         try {
-            // Only occupants are allowed to send messages to the conference
-            muc.invite("registeruser2@ejabberddemo.com", "Go here to make love.");
+            muc.sendMessage("hello everyone");
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }

@@ -235,7 +235,7 @@ listen:
 ## If you want to use a different method,
 ## comment this line and enable the correct ones.
 ##
-auth_method: internal
+# auth_method: internal
 
 ##
 ## Store the plain passwords or hashed for SCRAM:
@@ -256,46 +256,13 @@ auth_method: internal
 ## Authentication using ODBC
 ## Remember to setup a database in the next section.
 ##
-## auth_method: odbc
+auth_method: odbc
 
 ##
 ## Authentication using PAM
 ##
 ## auth_method: pam
 ## pam_service: "pamservicename"
-
-##
-## Authentication using LDAP
-##
-## auth_method: ldap
-##
-## List of LDAP servers:
-## ldap_servers:
-##   - "localhost"
-##
-## Encryption of connection to LDAP servers:
-## ldap_encrypt: none
-## ldap_encrypt: tls
-##
-## Port to connect to on LDAP servers:
-## ldap_port: 389
-## ldap_port: 636
-##
-## LDAP manager:
-## ldap_rootdn: "dc=example,dc=com"
-##
-## Password of LDAP manager:
-## ldap_password: "******"
-##
-## Search base of LDAP directory:
-## ldap_base: "dc=example,dc=com"
-##
-## LDAP attribute that holds user ID:
-## ldap_uids:
-##   - "mail": "%u@mail.example.org"
-##
-## LDAP filter:
-## ldap_filter: "(objectClass=shadowAccount)"
 
 ##
 ## Anonymous login support:
@@ -329,37 +296,14 @@ auth_method: internal
 ##
 ## MySQL server:
 ##
-## odbc_type: mysql
-## odbc_server: "server"
-## odbc_database: "database"
-## odbc_username: "username"
-## odbc_password: "password"
+  odbc_type: mysql
+  odbc_server: "localhost"
+  odbc_database: "ejabberdmysql"
+  odbc_username: "root"
+  odbc_password: "root"
 ##
 ## If you want to specify the port:
 ## odbc_port: 1234
-
-##
-## PostgreSQL server:
-##
-## odbc_type: pgsql
-## odbc_server: "server"
-## odbc_database: "database"
-## odbc_username: "username"
-## odbc_password: "password"
-##
-## If you want to specify the port:
-## odbc_port: 1234
-##
-## If you use PostgreSQL, have a large database, and need a
-## faster but inexact replacement for "select count(*) from users"
-##
-## pgsql_users_number_estimate: true
-
-##
-## SQLite:
-##
-## odbc_type: sqlite
-## odbc_database: "/path/to/database.db"
 
 ##
 ## ODBC compatible or MSSQL server:
@@ -370,7 +314,7 @@ auth_method: internal
 ##
 ## Number of connections to open to the database for each virtual host
 ##
-## odbc_pool_size: 10
+  odbc_pool_size: 10
 
 ##
 ## Interval to make a dummy SQL request to keep the connections to the
@@ -514,9 +458,12 @@ access:
   ##   bad_servers: deny
   ##   all: allow
 
+  roster:
+    admin: allow
+
 ## By default the frequency of account registrations from the same IP
 ## is limited to 1 account every 10 minutes. To disable, specify: infinity
-## registration_timeout: 600
+registration_timeout: infinity
 
 ##
 ## Define specific Access Rules in a virtual host.
@@ -578,7 +525,7 @@ language: "en"
 ##
 modules:
   mod_adhoc: {}
-  ## mod_admin_extra: {}
+  mod_admin_extra: {}
   mod_announce: # recommends mod_adhoc
     access: announce
   mod_blocking: {} # requires mod_privacy
@@ -595,17 +542,20 @@ modules:
   ## mod_http_fileserver:
   ##   docroot: "/var/www"
   ##   accesslog: "/var/log/ejabberd/access.log"
-  mod_last: {}
+  mod_last:
+    db_type: odbc
   mod_muc:
     host: "conference.@HOST@"
     access: muc
     access_create: muc_create
     access_persistent: muc_create
     access_admin: muc_admin
+    db_type: odbc
   ## mod_muc_log: {}
   ## mod_multicast: {}
   mod_offline:
     access_max_user_messages: max_user_offline_messages
+    db_type: odbc
   mod_ping: {}
   ## mod_pres_counter:
   ##   count: 5
@@ -666,16 +616,23 @@ modules:
     # access: register
     access_from: register
 
-  mod_roster: {}
-  mod_shared_roster: {}
+  mod_roster:
+    access: roster
+    db_type: odbc
+  mod_shared_roster:
+    db_type: odbc
   mod_stats: {}
   mod_time: {}
-  mod_vcard: {}
+  mod_vcard:
+    db_type: odbc
   mod_version: {}
 
   mod_muc_admin: {}
 
-  mod_mam: {}
+  ## http://docs.ejabberd.im/admin/guide/configuration/#modmam
+  mod_mam:
+    db_type: odbc
+    default: always
 
 ##
 ## Enable modules with custom options in a specific virtual host
@@ -693,6 +650,9 @@ modules:
 ##
 
 allow_contrib_modules: true
+
+## ession Management
+sm_db_type: odbc
 
 ###.
 ###'

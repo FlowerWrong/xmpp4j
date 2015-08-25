@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by yy on 15-8-24.
  */
-public class InviteListener {
+public class InviteToRoomListener {
     public static void main(String[] args) {
         SmackConfiguration.DEBUG = true;
         SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
@@ -37,16 +37,27 @@ public class InviteListener {
             e.printStackTrace();
         }
 
-        MultiUserChatManager.getInstanceFor(connection).addInvitationListener(new InvitationListener() {
+        final MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
+
+        manager.addInvitationListener(new InvitationListener() {
             @Override
             public void invitationReceived(XMPPConnection conn, MultiUserChat room, String inviter, String reason,
                                            String password, Message message) {
                 // MultiUserChat.decline(xmppConnection, multiUserChat, inviter, "I'm busy right now");
-                System.out.print(room);
-                System.out.print(inviter);
-                System.out.print(reason);
-                System.out.print(password);
-                System.out.print(message);
+                MultiUserChat muc = manager.getMultiUserChat(room.getRoom());
+                try {
+                    muc.join("registeruser2");
+                } catch (SmackException.NoResponseException e) {
+                    e.printStackTrace();
+                } catch (XMPPException.XMPPErrorException e) {
+                    e.printStackTrace();
+                } catch (SmackException.NotConnectedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("==================addInvitationListener=================");
+                System.out.println(room);
+                System.out.println(inviter);
+                System.out.println(reason);
             }
         });
 
