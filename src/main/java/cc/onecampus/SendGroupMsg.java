@@ -39,7 +39,7 @@ public class SendGroupMsg {
         }
 
         MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
-        MultiUserChat muc = manager.getMultiUserChat("demoroom4@conference.ejabberddemo.com");
+        MultiUserChat muc = manager.getMultiUserChat("demoroom6@conference.ejabberddemo.com");
 
         try {
             muc.join("registeruser");
@@ -61,7 +61,7 @@ public class SendGroupMsg {
 
         RoomInfo info = null;
         try {
-            info = manager.getRoomInfo("demoroom4@conference.ejabberddemo.com");
+            info = manager.getRoomInfo("demoroom6@conference.ejabberddemo.com");
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
@@ -75,7 +75,7 @@ public class SendGroupMsg {
         System.out.println("============================Number of occupants:" + info.getOccupantsCount());
         System.out.println("============================Room Subject:" + info.getName());
 
-        // sudo ejabberdctl get_room_occupants demoroom4 conference.ejabberddemo.com
+        // sudo ejabberdctl get_room_occupants demoroom6 conference.ejabberddemo.com
         Set<String> joinedRooms = manager.getJoinedRooms();
         System.out.println("=================joinedrooms==============");
         System.out.println(joinedRooms);
