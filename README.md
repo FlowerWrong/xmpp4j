@@ -60,7 +60,8 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [ejabberd-manual-xmpp-rules-for-leaving-rooms](http://stackoverflow.com/questions/10758295/ejabberd-manual-xmpp-rules-for-leaving-rooms)
 * [ejabberd block messages from users that don't stay in my friend list](http://stackoverflow.com/questions/30734000/ejabberd-block-messages-from-users-that-dont-stay-in-my-friend-list)
 * [基于ejabberd简单实现xmpp群聊离线消息](http://www.cnblogs.com/lovechengcheng/p/4083398.html)
-
+* [In XMPP pubsub is it possible for a subscriber to retrieve the Subscriptions List or combine it with MUC?](http://stackoverflow.com/questions/10607512/in-xmpp-pubsub-is-it-possible-for-a-subscriber-to-retrieve-the-subscriptions-lis)
+* [XMPP Questions Answered: Pubsub versus Multi-User Chat](http://metajack.im/2010/01/15/xmpp-pubsub-versus-multiuser-chat/)
 
 ### ejabberd分析
 
@@ -73,3 +74,8 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [Ejabberd源码解析前奏--概述](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3501682)
 * [Ejabberd源码解析前奏--安装](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3502054)
 * [Ejabberd源码解析前奏--配置](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3507236)
+
+### Module development
+
+* [获取用户房间列表](http://blog.zlxstar.me/blog/2013/07/21/dicorvery-user-muclist/)
+
