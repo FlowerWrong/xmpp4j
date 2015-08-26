@@ -59,3 +59,17 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [ejabberd 15.06: Message archive, configuration checker and new packages XEP-313](https://blog.process-one.net/ejabberd-15-06/)
 * [ejabberd-manual-xmpp-rules-for-leaving-rooms](http://stackoverflow.com/questions/10758295/ejabberd-manual-xmpp-rules-for-leaving-rooms)
 * [ejabberd block messages from users that don't stay in my friend list](http://stackoverflow.com/questions/30734000/ejabberd-block-messages-from-users-that-dont-stay-in-my-friend-list)
+* [基于ejabberd简单实现xmpp群聊离线消息](http://www.cnblogs.com/lovechengcheng/p/4083398.html)
+
+
+### ejabberd分析
+
+* [ejabberd分析(一)](http://www.cnblogs.com/yjl49/archive/2011/09/02/2371964.html)
+* [ejabberd分析(二) 用户注册](http://www.cnblogs.com/yjl49/archive/2011/09/15/2371958.html)
+* [ejabberd分析(三)启动流程](http://www.cnblogs.com/yjl49/archive/2011/09/08/2371961.html)
+* [ejabberd分析(四) 用户登录](http://www.cnblogs.com/yjl49/archive/2011/09/15/2371957.html)
+* [ejabberd分析(五)+订阅/添加好友](http://www.cnblogs.com/yjl49/archive/2011/10/13/2371953.html)
+* [通过ejabberd日志分析客户端登录流程](http://my.oschina.net/hncscwc/blog/159826)
+* [Ejabberd源码解析前奏--概述](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3501682)
+* [Ejabberd源码解析前奏--安装](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3502054)
+* [Ejabberd源码解析前奏--配置](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3507236)

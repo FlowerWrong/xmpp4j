@@ -490,7 +490,7 @@ registration_timeout: infinity
 ##
 ## language: Default language used for server messages.
 ##
-language: "en"
+language: "zh"
 
 ##
 ## Set a different default language in a virtual host.
