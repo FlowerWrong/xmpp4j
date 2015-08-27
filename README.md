@@ -79,3 +79,38 @@ java -jar build/libs/xmpp4j-1.0.jar
 
 * [获取用户房间列表](http://blog.zlxstar.me/blog/2013/07/21/dicorvery-user-muclist/)
 
+### Whatsapp-like group chat
+
+```ruby
+XEP-45 was designed more then 10 years ago. Back then, the designers had something like IRC channels in mind. Everything of XEP-45 is designed based on the assumption that a user enters and leaves a room when he/she starts/terminates its client.
+
+WhatsApp Groupchats are different: A user joins a groupchat is is able to view the (complete) history of that chat. Even if the users client is offline/unavailable, he is still considered part of the groupchat. The only extensions that providers roughly similar behavior of XEP-60 PubSub. But that again was written for a different use case.
+
+So you have basically 3 options:
+
+    Use XEP-45 with the mentioned workarounds in the other answers: XEP-198 and/or XEP-313
+    Implement persistent groupchat based on PubSub
+    Implement your own persistent groupchat XMPP extension
+
+XEP-313 seems at first the best solution, although you likely have to implement a lot of code yourself. 2. Could be an option, but you would code against an implementation not especially designed for the use case. This could result in ugly workarounds or deviations from the standard. But Buddycloud proves that it's doable. Sometimes I think what the XMPP community needs is 3.: A new extensions written from scratch that is designed for persistent groupchats.
+```
+
+```ruby
+I faced your issue as I sought to implement groupchats for my chatting app. I faced the same problem of MUC not storing offline messages for each recipient. And I did not want to retrieve MUC history which requires the user to rejoin every MUC to update his messages database. What I wanted is for the server to save offline messages by recipient, and for the recipient to get all MUC messages when he gets online (without having to join each MUC).
+
+The way I did it is through pubsub. Using pubsub will force the server to store offline message per recipient. When the user reconnects, he gets all the offline messages including the pubsub messages which are sent as normal messages - that is it. One issue I had with pubsub over MUC though is that it is hard to get the list of subscribers. So when my app creates a groupchat, it creates a pubsub node for messages, invite all participants to subscribe (including self) to the pubsub and my app also creates a MUC and makes every participant an owner of that MUC. This way the list of the groupchat participants can be retrieved by checking the list of owners of the MUC. The only purposes of the MUC are to hold the list of participants as well as the name of the groupchat. Everything else is handled by the pubsub node.
+
+Anything unclear please let me know.
+```
+
+```ruby
+Shooting from the hip here, but it's similar to something I thought about a while ago..persistent MUC rooms.
+
+Possible approach involving a modified mod_muc_room:
+
+    On room creation create a Shared Roster group () named {room name}_Participants
+    Whenever someone joins the room add them to the roster
+    Whenever someone sends /me leaves then remove them from the roster
+    Whenever a message is received for the room, send it wrapped in a 'While you were out...' style message to any user in shared roster who is not online
+    When room is killed remove shared roster
+```

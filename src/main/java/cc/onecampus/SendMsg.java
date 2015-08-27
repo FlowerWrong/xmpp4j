@@ -59,11 +59,13 @@ public class SendMsg {
         // send msg
         Chat chat = ChatManager.getInstanceFor(connection).createChat("registeruser2@ejabberddemo.com");
         try {
-            chat.sendMessage("Howdy!");
+            chat.sendMessage("Hello world!");
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }
 
-        while (true);
+        connection.disconnect();
+
+        // while (true);
     }
 }

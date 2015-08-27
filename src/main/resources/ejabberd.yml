@@ -36,7 +36,7 @@
 ## 4: Info
 ## 5: Debug
 ##
-loglevel: 4
+loglevel: 5  # 默认是4,开发环境开启调试模式
 
 ##
 ## rotation: Describe how to rotate logs. Either size and/or date can trigger
@@ -93,6 +93,7 @@ log_rate_limit: 100
 ##   - "example.com"
 ##   - "example.org"
 ##
+## 主机配置,可配置多个域名
 hosts:
   - "ejabberddemo.com"
 
@@ -351,7 +352,7 @@ acl:
   ##
   admin:
     user:
-      - "yang": "ejabberddemo.com"
+      - "yang": "ejabberddemo.com"  # admin 账户
   ##
   ## Blocked users
   ##
@@ -450,7 +451,7 @@ access:
   register:
     all: allow
   ## Only allow to register from localhost
-  #  trusted_network:
+  #  trusted_network:  # 只允许本地注册
   #    all: allow
     # loopback: allow
   ## Do not establish S2S connections with bad servers
@@ -463,7 +464,7 @@ access:
 
 ## By default the frequency of account registrations from the same IP
 ## is limited to 1 account every 10 minutes. To disable, specify: infinity
-registration_timeout: infinity
+registration_timeout: infinity  # 取消注册时间/次数限制
 
 ##
 ## Define specific Access Rules in a virtual host.
@@ -495,9 +496,9 @@ language: "zh"
 ##
 ## Set a different default language in a virtual host.
 ##
-## host_config:
-##   "localhost":
-##     language: "ru"
+#host_config:
+#  "localhost":
+#    language: "zh"
 
 ###.  =======
 ###'  CAPTCHA
@@ -589,7 +590,7 @@ modules:
     ## After successful registration, the user receives
     ## a message with this subject and body.
     ##
-    welcome_message:
+    welcome_message:  # 注册后的欢迎消息
       subject: "Welcome!"
       body: |-
         Hi.
@@ -606,7 +607,7 @@ modules:
     ## Only clients in the server machine can register accounts
     ##
     ## ip_access: trusted_network
-    ip_access: all
+    ip_access: all  # 允许所有ip注册
 
     ##
     ## Local c2s or remote s2s users cannot register accounts
@@ -614,7 +615,7 @@ modules:
     ## access_from: deny
 
     # access: register
-    access_from: register
+    access_from: register  # FIXME access: register不能注册
 
   mod_roster:
     access: roster
@@ -627,9 +628,11 @@ modules:
     db_type: odbc
   mod_version: {}
 
+  # 群聊后台管理
   mod_muc_admin: {}
 
   ## http://docs.ejabberd.im/admin/guide/configuration/#modmam
+  # 聊天记录保存
   mod_mam:
     db_type: odbc
     default: always

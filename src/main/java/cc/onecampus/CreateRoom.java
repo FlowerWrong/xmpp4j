@@ -41,7 +41,7 @@ public class CreateRoom {
             e.printStackTrace();
         }
 
-        String roomName = "demoroom5";
+        String roomName = "demoroom7";
 
         // https://github.com/rtreffer/smack/blob/master/test/org/jivesoftware/smackx/muc/MultiUserChatTest.java
         try {
