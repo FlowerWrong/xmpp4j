@@ -297,25 +297,19 @@ auth_method: odbc
 ##
 ## MySQL server:
 ##
-  odbc_type: mysql
-  odbc_server: "localhost"
-  odbc_database: "ejabberdmysql"
-  odbc_username: "root"
-  odbc_password: "root"
+odbc_type: mysql
+odbc_server: "localhost"
+odbc_database: "ejabberdmysql"
+odbc_username: "root"
+odbc_password: "root"
 ##
 ## If you want to specify the port:
 ## odbc_port: 1234
 
 ##
-## ODBC compatible or MSSQL server:
-##
-## odbc_type: odbc
-## odbc_server: "DSN=ejabberd;UID=ejabberd;PWD=ejabberd"
-
-##
 ## Number of connections to open to the database for each virtual host
 ##
-  odbc_pool_size: 10
+odbc_pool_size: 10
 
 ##
 ## Interval to make a dummy SQL request to keep the connections to the

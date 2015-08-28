@@ -114,3 +114,29 @@ Possible approach involving a modified mod_muc_room:
     Whenever a message is received for the room, send it wrapped in a 'While you were out...' style message to any user in shared roster who is not online
     When room is killed remove shared roster
 ```
+
+#### Build ejabberd from source code
+
+```ruby
+git clone git@github.com:processone/ejabberd.git
+git tag -l
+git checkout 15.07
+
+./autogen.sh
+./configure --prefix=$HOME/softwares/ejabberd/ --enable-mysql
+make clean
+make
+make install
+
+rm $HOME/softwares/ejabberd/etc/ejabberd/ejabberd.yml
+ln -s $HOME/dev/java/xmpp4j/src/main/resources/ejabberd.yml $HOME/softwares/ejabberd/etc/ejabberd
+
+# setup mysql
+CREATE DATABASE `ejabberdmysql` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+use ejabberdmysql;
+SOURCE mysql.sql;
+
+./sbin/ejabberdctl start
+./sbin/ejabberdctl status
+./sbin/ejabberdctl stop
+```
