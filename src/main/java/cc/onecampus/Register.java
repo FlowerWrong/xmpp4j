@@ -14,9 +14,10 @@ public class Register {
 
     public static void register(AbstractXMPPConnection connection, String name, String pass) {
         AccountManager accountManager = AccountManager.getInstance(connection);
+        accountManager.sensitiveOperationOverInsecureConnection(true);
+
         try {
             accountManager.createAccount(name, pass);
-            accountManager.sensitiveOperationOverInsecureConnection(true);
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
@@ -28,7 +29,7 @@ public class Register {
 
     public static void main(String[] args) {
         SmackConfiguration.DEBUG = true;
-        SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
+        SmackConfiguration.setDefaultPacketReplyTimeout(30 * 1000);
 
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);

@@ -458,7 +458,7 @@ access:
 
 ## By default the frequency of account registrations from the same IP
 ## is limited to 1 account every 10 minutes. To disable, specify: infinity
-registration_timeout: infinity  # 取消注册时间/次数限制
+# registration_timeout: infinity  # 取消注册时间/次数限制
 
 ##
 ## Define specific Access Rules in a virtual host.

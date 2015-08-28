@@ -139,4 +139,6 @@ SOURCE mysql.sql;
 ./sbin/ejabberdctl start
 ./sbin/ejabberdctl status
 ./sbin/ejabberdctl stop
+
+./sbin/ejabberdctl register yang ejabberddemo.com 123456
 ```
