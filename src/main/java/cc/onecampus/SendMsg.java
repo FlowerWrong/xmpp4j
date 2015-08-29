@@ -11,6 +11,7 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 
 import java.io.IOException;
 
+
 /**
  * Created by yy on 15-8-24.
  */
@@ -27,14 +28,14 @@ public class SendMsg {
         configBuilder.setDebuggerEnabled(true).build();
 
         AbstractXMPPConnection connection = new XMPPTCPConnection(configBuilder.build());
+
         try {
-            connection.connect();
-            connection.login();
+            connection.connect().login();
+        } catch (XMPPException e) {
+            e.printStackTrace();
         } catch (SmackException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XMPPException e) {
             e.printStackTrace();
         }
 
@@ -59,7 +60,7 @@ public class SendMsg {
         // send msg
         Chat chat = ChatManager.getInstanceFor(connection).createChat("registeruser2@ejabberddemo.com");
         try {
-            chat.sendMessage("Hello world!");
+            chat.sendMessage("It is a message to test offline mam.");
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         }

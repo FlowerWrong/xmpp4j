@@ -46,17 +46,17 @@ public class MsgListener {
                     @Override
                     public void processMessage(Chat chat, Message message) {
                         System.out.println("========================" + message.getFrom() + " : " + message.getBody());
-                        if (message.getType() == Message.Type.chat || message.getType() == Message.Type.normal) {
-                            if (message.getBody() != null) {
-                                System.out.println("========================" + message.getFrom() + " : " + message.getBody());
-                                // reply msg
-                                try {
-                                    chat.sendMessage("hello registeruser!");
-                                } catch (SmackException.NotConnectedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
+//                        if (message.getType() == Message.Type.chat || message.getType() == Message.Type.normal) {
+//                            if (message.getBody() != null) {
+//                                System.out.println("========================" + message.getFrom() + " : " + message.getBody());
+//                                // reply msg
+////                                try {
+////                                    chat.sendMessage("hello registeruser!");
+////                                } catch (SmackException.NotConnectedException e) {
+////                                    e.printStackTrace();
+////                                }
+//                            }
+//                        }
                     }
                 });
             }
