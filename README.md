@@ -62,6 +62,8 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [基于ejabberd简单实现xmpp群聊离线消息](http://www.cnblogs.com/lovechengcheng/p/4083398.html)
 * [In XMPP pubsub is it possible for a subscriber to retrieve the Subscriptions List or combine it with MUC?](http://stackoverflow.com/questions/10607512/in-xmpp-pubsub-is-it-possible-for-a-subscriber-to-retrieve-the-subscriptions-lis)
 * [XMPP Questions Answered: Pubsub versus Multi-User Chat](http://metajack.im/2010/01/15/xmpp-pubsub-versus-multiuser-chat/)
+* [whatsapp-like group chat and chat must be friends](https://github.com/processone/ejabberd/issues/719)
+* [ejabberd如何实现群聊?ejabberd如何实现只有朋友关系才能私聊?](https://github.com/wudixiaotie/simple_im/issues/1)
 
 ### ejabberd分析
 
