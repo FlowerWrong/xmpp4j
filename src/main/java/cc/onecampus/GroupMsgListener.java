@@ -39,7 +39,7 @@ public class GroupMsgListener {
         }
 
         MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
-        MultiUserChat muc = manager.getMultiUserChat("demoroom6@conference.ejabberddemo.com");
+        MultiUserChat muc = manager.getMultiUserChat("demoroom1@conference.ejabberddemo.com");
 
         try {
             muc.join("registeruser2");
@@ -61,7 +61,7 @@ public class GroupMsgListener {
 
         RoomInfo info = null;
         try {
-            info = manager.getRoomInfo("demoroom6@conference.ejabberddemo.com");
+            info = manager.getRoomInfo("demoroom1@conference.ejabberddemo.com");
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {

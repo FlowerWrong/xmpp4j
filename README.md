@@ -144,3 +144,12 @@ SOURCE mysql.sql;
 
 ./sbin/ejabberdctl register yang ejabberddemo.com 123456
 ```
+
+#### Debug mnesia of ejabberd
+
+```ruby
+ejabberdctl debug
+
+mnesia:info().
+observer:start().
+```

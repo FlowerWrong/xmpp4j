@@ -14,9 +14,12 @@ public class LoginAndVcard {
         SmackConfiguration.DEBUG = true;
         SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
 
+        //XMPPTCPConnection.setUseStreamManagementDefault(true);
+
         // Create the configuration for this new connection
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
+
         configBuilder.setUsernameAndPassword("registeruser", "12345678");
         // configBuilder.setResource("");
         configBuilder.setServiceName("ejabberddemo.com");

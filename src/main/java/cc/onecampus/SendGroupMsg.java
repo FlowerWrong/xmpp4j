@@ -22,7 +22,7 @@ public class SendGroupMsg {
 
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-        configBuilder.setUsernameAndPassword("registeruser", "12345678");
+        configBuilder.setUsernameAndPassword("registeruser2", "123456");
         configBuilder.setServiceName("ejabberddemo.com");
         configBuilder.setDebuggerEnabled(true).build();
 
@@ -39,10 +39,10 @@ public class SendGroupMsg {
         }
 
         MultiUserChatManager manager = MultiUserChatManager.getInstanceFor(connection);
-        MultiUserChat muc = manager.getMultiUserChat("demoroom6@conference.ejabberddemo.com");
+        MultiUserChat muc = manager.getMultiUserChat("demoroom1@conference.ejabberddemo.com");
 
         try {
-            muc.join("registeruser");
+            muc.join("registeruser2");
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
@@ -61,7 +61,7 @@ public class SendGroupMsg {
 
         RoomInfo info = null;
         try {
-            info = manager.getRoomInfo("demoroom6@conference.ejabberddemo.com");
+            info = manager.getRoomInfo("demoroom1@conference.ejabberddemo.com");
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
