@@ -34,6 +34,8 @@ public class LoginAndVcard {
             e.printStackTrace();
         }
 
+        while (true);
+
         // To save VCard:
         // https://www.igniterealtime.org/builds/smack/docs/latest/javadoc/org/jivesoftware/smackx/vcardtemp/packet/VCard.html
 //        VCard vCard = new VCard();
@@ -80,6 +82,6 @@ public class LoginAndVcard {
 //        }
         // vCard.load(conn, "joe@foo.bar"); // load someone's VCard+
 
-        connection.disconnect();
+        // connection.disconnect();
     }
 }
