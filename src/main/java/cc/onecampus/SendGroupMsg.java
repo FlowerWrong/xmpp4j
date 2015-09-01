@@ -20,6 +20,9 @@ public class SendGroupMsg {
         SmackConfiguration.DEBUG = true;
         SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
 
+        XMPPTCPConnection.setUseStreamManagementDefault(true);
+        // XMPPTCPConnection.setUseStreamManagementResumptiodDefault(true);
+
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
         configBuilder.setUsernameAndPassword("registeruser2", "123456");
@@ -95,6 +98,8 @@ public class SendGroupMsg {
             e.printStackTrace();
         }
 
-        while (true);
+        // connection.disconnect();
+
+        // while (true);
     }
 }

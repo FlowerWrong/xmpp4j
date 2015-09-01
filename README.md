@@ -64,6 +64,7 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [XMPP Questions Answered: Pubsub versus Multi-User Chat](http://metajack.im/2010/01/15/xmpp-pubsub-versus-multiuser-chat/)
 * [whatsapp-like group chat and chat must be friends](https://github.com/processone/ejabberd/issues/719)
 * [ejabberd如何实现群聊?ejabberd如何实现只有朋友关系才能私聊?](https://github.com/wudixiaotie/simple_im/issues/1)
+* [Dead connections, message loss, and outdated presence](https://www.ejabberd.im/faq/tcp)
 
 ### ejabberd分析
 
@@ -76,6 +77,8 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [Ejabberd源码解析前奏--概述](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3501682)
 * [Ejabberd源码解析前奏--安装](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3502054)
 * [Ejabberd源码解析前奏--配置](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3507236)
+* [XEP-0198:Stream Management研究](http://blog.csdn.net/tjsjping/article/details/6890915)
+* [ejabberd SQL database schema](http://docs.ejabberd.im/developer/sql-schema/)
 
 ### Module development
 

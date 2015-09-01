@@ -179,6 +179,9 @@ listen:
     register: true
     captcha: true
 
+    ## https://www.process-one.net/docs/ejabberd/guide_en.html#listened-options
+    resume_timeout: 60
+
 ###.  ==================
 ###'  S2S GLOBAL OPTIONS
 
@@ -522,15 +525,20 @@ language: "zh"
 modules:
   mod_adhoc: {}
   mod_admin_extra: {}
+  ## Manage announcements
   mod_announce: # recommends mod_adhoc
     access: announce
+  ## Simple Communications Blocking (XEP-0191)
   mod_blocking: {} # requires mod_privacy
+  ## Entity Capabilities (XEP-0115)
   mod_caps: {}
+  ## Message Carbons (XEP-0280)
   mod_carboncopy: {}
   mod_client_state:
     drop_chat_states: true
     queue_presence: false
   mod_configure: {} # requires mod_adhoc
+  ## Service Discovery (XEP-0030)
   mod_disco: {}
   ## mod_echo: {}
   mod_irc: {}
@@ -556,10 +564,14 @@ modules:
   ## mod_pres_counter:
   ##   count: 5
   ##   interval: 60
-  mod_privacy: {}
-  mod_private: {}
+  ## The table is used to store privacy rules.
+  mod_privacy:
+    db_type: odbc
+  mod_private:
+    db_type: odbc
   ## mod_proxy65: {}
   mod_pubsub:
+    db_type: odbc
     access_createnode: pubsub_createnode
     ## reduces resource comsumption, but XEP incompliant
     ignore_pep_from_offline: true
@@ -615,6 +627,7 @@ modules:
   mod_roster:
     access: roster
     db_type: odbc
+  ## Shared roster management
   mod_shared_roster:
     db_type: odbc
   mod_stats: {}
