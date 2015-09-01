@@ -156,3 +156,9 @@ ejabberdctl debug
 mnesia:info().
 observer:start().
 ```
+
+#### TODO
+
+- [ ] hack for friends chat
+- [ ] hack for save group users
+- [ ] write http api for chat history
