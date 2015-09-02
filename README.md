@@ -164,3 +164,8 @@ observer:start().
 - [ ] hack for friends chat
 - [ ] hack for save group users
 - [ ] write http api for chat history
+
+#### smack demo
+
+* [Android基于XMPP Smack Openfire下学习开发IM(二)对分组、好友和头像等一些操作](http://blog.csdn.net/h7870181/article/details/8735953)
+* [Android基于XMPP Smack Openfire下学习开发IM(三)会议室创建、加入以及查询会议室中所有成员等](http://blog.csdn.net/h7870181/article/details/8737765)
