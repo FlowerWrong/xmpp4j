@@ -29,10 +29,11 @@ public class Register {
 
     public static void main(String[] args) {
         SmackConfiguration.DEBUG = true;
-        SmackConfiguration.setDefaultPacketReplyTimeout(30 * 1000);
+        SmackConfiguration.setDefaultPacketReplyTimeout(10 * 1000);
 
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
+        configBuilder.setUsernameAndPassword("yang", "123456");
 
         configBuilder.setServiceName("ejabberddemo.com");
         configBuilder.setDebuggerEnabled(true).build();
@@ -48,7 +49,7 @@ public class Register {
             e.printStackTrace();
         }
 
-        register(connection, "registeruser3", "123456");
+        register(connection, "registeruser14", "123456");
     }
 }
 

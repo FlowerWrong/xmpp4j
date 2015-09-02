@@ -79,6 +79,7 @@ java -jar build/libs/xmpp4j-1.0.jar
 * [Ejabberd源码解析前奏--配置](http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=22312037&id=3507236)
 * [XEP-0198:Stream Management研究](http://blog.csdn.net/tjsjping/article/details/6890915)
 * [ejabberd SQL database schema](http://docs.ejabberd.im/developer/sql-schema/)
+* [Ejabberd_Configuration](http://wiki.laptop.org/go/Ejabberd_Configuration)
 
 ### Module development
 
@@ -159,6 +160,7 @@ observer:start().
 
 #### TODO
 
+- [ ] only allow some ip for register
 - [ ] hack for friends chat
 - [ ] hack for save group users
 - [ ] write http api for chat history

@@ -383,24 +383,6 @@ acl:
     ip:
       - "127.0.0.0/8"
 
-  ##
-  ## Bad XMPP servers
-  ##
-  ## bad_servers:
-  ##   server:
-  ##     - "xmpp.zombie.org"
-  ##     - "xmpp.spam.com"
-
-##
-## Define specific ACLs in a virtual host.
-##
-## host_config:
-##   "localhost":
-##     acl:
-##       admin:
-##         user:
-##           - "bob-local": "localhost"
-
 ###.  ============
 ###'  ACCESS RULES
 access:
@@ -446,11 +428,11 @@ access:
   ## In-band registration allows registration of any possible username.
   ## To disable in-band registration, replace 'allow' with 'deny'.
   register:
-    all: allow
+    admin: allow
+    all: deny
   ## Only allow to register from localhost
-  #  trusted_network:  # 只允许本地注册
-  #    all: allow
-    # loopback: allow
+  trusted_network:
+    loopback: allow
   ## Do not establish S2S connections with bad servers
   ## s2s:
   ##   bad_servers: deny
@@ -613,16 +595,16 @@ modules:
     ##
     ## Only clients in the server machine can register accounts
     ##
-    ## ip_access: trusted_network
-    ip_access: all  # 允许所有ip注册
+    ip_access: trusted_network
+    # ip_access: all  # 允许所有ip注册
 
     ##
     ## Local c2s or remote s2s users cannot register accounts
     ##
     ## access_from: deny
 
-    # access: register
-    access_from: register  # FIXME access: register不能注册
+    access: register
+    # access_from: register  # FIXME access: register不能注册
 
   mod_roster:
     access: roster
