@@ -20,7 +20,7 @@ public class LoginAndVcard {
         XMPPTCPConnectionConfiguration.Builder configBuilder = XMPPTCPConnectionConfiguration.builder();
         configBuilder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
 
-        configBuilder.setUsernameAndPassword("registeruser", "12345678");
+        configBuilder.setUsernameAndPassword("registeruser2", "123456");
         // configBuilder.setResource("");
         configBuilder.setServiceName("ejabberddemo.com");
         configBuilder.setDebuggerEnabled(true).build();
